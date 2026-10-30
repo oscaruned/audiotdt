@@ -4,7 +4,7 @@
  */
 "use strict";
 
-const CACHE = "audiotdt-v1";
+const CACHE = "audiotdt-v2";
 const FICHEROS = [
   "./",
   "index.html",
@@ -30,6 +30,8 @@ self.addEventListener("activate", (e) => {
     const claves = await caches.keys();
     await Promise.all(claves.filter((k) => k !== CACHE).map((k) => caches.delete(k)));
     await self.clients.claim();
+    // al activar una versión nueva, recarga las pestañas abiertas para soltar el contenido viejo
+    for (const c of await self.clients.matchAll({ type: "window" })) c.navigate(c.url);
   })());
 });
 
