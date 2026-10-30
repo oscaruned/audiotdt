@@ -56,7 +56,7 @@
     // PWA: el service worker solo tiene sentido servido por HTTP (GitHub Pages u otro host).
     // Con file:// (uso doble clic) no hace nada y la app funciona igual.
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js", { updateViaCache: "none" }).catch(() => {}));
     }
   </script>
 </body>
