@@ -1,0 +1,222 @@
+/* TDT Radio — hoja de estilos */
+:root {
+  --fondo: #101318;
+  --panel: #171c23;
+  --panel-2: #1d232c;
+  --texto: #e8ecf1;
+  --texto-2: #97a2ae;
+  --acento: #27c07a;
+  --acento-2: #1fa867;
+  --peligro: #e05252;
+  --radio: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.2rem 1rem 2rem;
+}
+
+.cabecera { text-align: center; max-width: 640px; }
+.cabecera h1 {
+  font-size: 1.6rem;
+  margin: .2rem 0;
+  letter-spacing: .3px;
+}
+.cabecera h1 span {
+  color: var(--acento);
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: .9em;
+}
+.cabecera .sub {
+  color: var(--texto-2);
+  font-size: .86rem;
+  margin-top: .35rem;
+}
+
+main { width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 1rem; }
+
+/* ---- Reproductor ---- */
+.reproductor {
+  background: var(--panel);
+  border: 1px solid #232a33;
+  border-radius: var(--radio);
+  padding: 1.4rem 1rem 1.1rem;
+  text-align: center;
+}
+
+.dial {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto .8rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, var(--panel-2), #12161c 70%);
+  border: 1px solid #2a323d;
+  display: grid;
+  place-items: center;
+}
+
+/* ondas mientras suena */
+.onda {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--acento);
+  opacity: 0;
+  transform: scale(.6);
+  pointer-events: none;
+}
+.dial[data-estado="sonando"] .onda {
+  animation: onda 2.4s ease-out infinite;
+}
+.dial[data-estado="sonando"] .o2 { animation-delay: .8s; }
+.dial[data-estado="sonando"] .o3 { animation-delay: 1.6s; }
+.dial[data-estado="sonando"] .o3, .dial[data-estado="sonando"] .o1 { border-color: var(--acento); }
+/* ~~ línea vertical de anim fill~~ */
+@keyframes onda {
+  0%   { opacity: .45; transform: scale(.62); }
+  100% { opacity: 0;    transform: scale(1.18); }
+}
+
+.dial[data-estado="cargando"] .ondaspinner { display: block; } /* por si acaso */
+
+.boton-play {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 0;
+  background: linear-gradient(180deg, var(--acento), var(--acento-2));
+  color: #10161c;
+  font-size: 1.6rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 18px rgba(39, 192, 122, .25);
+  transition: transform .12s ease, background .2s;
+}
+.boton-play:hover { transform: scale(1.05); }
+.boton-play:active { transform: scale(.96); }
+.boton-play:disabled { background: #3a443f; box-shadow: none; cursor: wait; }
+
+.canal-actual {
+  margin: .4rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.estado {
+  margin: .25rem 0 0;
+  color: var(--texto-2);
+  font-size: .85rem;
+  min-height: 1.2em;
+}
+.estado.error { color: var(--peligro); }
+
+/* ---- Lista de canales ---- */
+.canales {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .6rem;
+}
+.boton-canal {
+  font: inherit;
+  color: var(--texto);
+  background: var(--panel);
+  border: 1px solid #232a33;
+  border-radius: var(--radio);
+  padding: .75rem .8rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  transition: border-color .15s, background .15s;
+}
+.boton-canal:hover { border-color: #3a4655; }
+.boton-canal[aria-current="true"] {
+  border-color: var(--acento);
+  background: rgba(39, 192, 122, .08);
+}
+.boton-canal .num {
+  font-weight: 700;
+  color: var(--acento);
+  font-variant-numeric: tabular-nums;
+  width: 1.9rem;
+  flex: 0 0 auto;
+}
+.boton-canal .nombre { flex: 1; }
+.boton-canal .marca {
+  flex: 0 0 auto;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #555f6a;
+}
+.boton-canal[data-fuente="ok"] .marca { background: var(--acento); }
+.boton-canal[data-fuente="ko"] .marca { background: var(--peligro); }
+.boton-canal .marca[data-desconocida] { background: #555f6a; }
+.boton-canal:disabled { opacity: .6; cursor: wait; }
+
+/* separador TV / Radio */
+.canales .grupo {
+  grid-column: 1 / -1;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--texto-2);
+  margin: .5rem .1rem -0.1rem;
+}
+.canales .grupo:first-child { margin-top: 0; }
+
+.enlace-web {
+  display: inline-block;
+  margin-top: .35rem;
+  font-size: .8rem;
+  color: var(--acento);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+.enlace-web:hover { filter: brightness(1.15); }
+
+/* ---- Notas ---- */
+.notas details {
+  background: var(--panel);
+  border: 1px solid #232a33;
+  border-radius: var(--radio);
+  padding: .7rem 1rem;
+  color: var(--texto-2);
+  font-size: .85rem;
+}
+.notas summary { cursor: pointer; color: var(--texto); }
+.notas kbd {
+  background: var(--panel-2);
+  border: 1px solid #2a323d;
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 .3em;
+  font-size: .8rem;
+}
+.notas ul { margin: .6rem 0 0; padding-left: 1.1rem; }
+.notas li { margin: .3rem 0; }
+
+audio { display: none; }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fondo: #f4f6f8;
+    --panel: #ffffff;
+    --panel-2: #eef2f5;
+    --texto: #1b2330;
+    --texto-2: #66717d;
+  }
+  .dial { background: radial-gradient(circle at 32% 28%, var(--panel-2), #ffffff 70%); }
+}

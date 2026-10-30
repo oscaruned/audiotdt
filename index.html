@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>TDT Radio — audio en directo</title>
+  <meta name="description" content="Escucha en audio la TDT española (La 1, La 2, Telemadrid, La Otra, Trece…) y las radios COPE, Onda Cero, Capital e Intereconomía.">
+  <meta name="theme-color" content="#101318">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2327c07a'/%3E%3Cpath d='M10 12h12M10 17h12M10 22h7' stroke='%23101318' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="cabecera">
+    <h1>TDT <span>radio</span></h1>
+    <p class="sub">Audio en directo de la TDT y la radio española · funciona con la pantalla apagada</p>
+  </header>
+
+  <main>
+    <section class="reproductor" aria-label="Reproductor">
+      <div class="dial" id="dial" data-estado="parado">
+        <span class="onda o1"></span>
+        <span class="onda o2"></span>
+        <span class="onda o3"></span>
+        <button class="boton-play" id="btnPlay" aria-label="Reproducir o pausar" title="Reproducir / Pausar">▶</button>
+      </div>
+      <p class="canal-actual"><span id="nombreCanal">—</span></p>
+      <p class="estado" id="estado" role="status">Elige un canal</p>
+      <a class="enlace-web" id="enlaceWeb" target="_blank" rel="noopener" hidden>Web oficial ↗</a>
+    </section>
+
+    <nav class="canales" aria-label="Lista de canales" id="listaCanales"></nav>
+
+    <section class="notas">
+      <details>
+        <summary>Cómo funciona y atajos</summary>
+        <ul>
+          <li>Toca un canal o usa las teclas <kbd>↑</kbd> <kbd>↓</kbd>; <kbd>Espacio</kbd> reproduce/pausa.</li>
+          <li>La emisión es solo audio: gasta pocos datos y permite escuchar el directo con la pantalla apagada (Chrome/Edge Android abril olvida esto en iOS).</li>
+          <li>Si un canal falla, la app prueba la siguiente fuente del canal automáticamente. Los canales privados (Cuatro, Be Mad, A3, LaSexta, BOM) pueden estar temporalmente fuera por derechos.</li>
+          <li>Las radios (COPE, COPE Madrid, Onda Cero, Capital, Intereconomía) son emisiones directas; "Deportes COPE" es un programa dentro de COPE, no una emisora separada.</li>
+          <li>Recuerda tu último canal entre sesiones.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
+
+  <audio id="player" preload="none" crossorigin="anonymous"></audio>
+
+  <script src="src/hls.min.js"></script>
+  <script src="canales.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
