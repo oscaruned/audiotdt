@@ -180,7 +180,7 @@ function actualizarMediaSession() {
   if (!("mediaSession" in navigator) || canalIdx < 0) return;
   navigator.mediaSession.metadata = new MediaMetadata({
     title: CANALES[canalIdx].nombre,
-    artist: "TDT en directo — audio",
+    artist: "audiotdt — TDT en directo",
     album: "TDT Radio",
   });
   try {
