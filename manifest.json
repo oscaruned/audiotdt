@@ -1,13 +1,27 @@
 {
-  "name": "TDT Radio",
-  "short_name": "TDT Radio",
-  "description": "Audio en directo de la TDT española",
+  "id": "./",
+  "name": "audiotdt",
+  "short_name": "audiotdt",
+  "description": "TV española y radio en directo, solo audio, con la pantalla apagada",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#101318",
   "theme_color": "#101318",
   "lang": "es",
   "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2327c07a'/%3E%3Cpath d='M10 12h12M10 17h12M10 22h7' stroke='%23101318' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E",
       "sizes": "any",
